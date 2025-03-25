@@ -28,7 +28,7 @@ export default function HomePage() {
             rows={5}
           />
           <Button variant="contained" size="large">
-            Submit Request
+            Send
           </Button>
         </Stack>
       </Paper>
