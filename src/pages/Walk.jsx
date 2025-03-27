@@ -11,13 +11,17 @@ export default function WalkPage({ userEmail = "atambo1@gmail.com" }) {
     async function fetchScroll() {
       try {
         const res = await axios.post("/api/fetch-user", { email: userEmail });
-        const { scrollIndex } = res.data;
+        const scrollIndex = res.data?.scrollIndex ?? 0;
         if (!hasScrolled.current) {
-          window.scrollTo(0, scrollIndex || 0);
+          window.scrollTo(0, scrollIndex);
           hasScrolled.current = true;
         }
       } catch (err) {
-        console.error("Failed to restore scroll:", err);
+        console.warn("No scroll position to restore. Starting fresh.");
+        if (!hasScrolled.current) {
+          window.scrollTo(0, 0);
+          hasScrolled.current = true;
+        }
       }
     }
 
