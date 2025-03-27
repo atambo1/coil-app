@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && prisma generate",
+    "build": "vite build",
     "postinstall": "prisma generate",
     "lint": "eslint .",
     "preview": "vite preview"
