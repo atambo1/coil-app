@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/walk", "destination": "/walk-test.html" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
