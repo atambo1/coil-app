@@ -1,18 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import EntryGate from "./pages/Enter";
-import WalkPage from "./pages/Walk";
 import HomePage from "./pages/HomePage";
-import WalkQuestions from "../src/pages/WalkQuestions";
+import WalkPage from "./pages/Walk";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Router>
       <Routes>
-        <Route path="/" element={<EntryGate />} />
-        <Route path="/walk" element={<WalkPage userEmail="atambo1@gmail.com" />} />
-        <Route path="/walk/questions" element={<WalkQuestions />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/walk" element={<WalkPage />} />
       </Routes>
     </Router>
   </React.StrictMode>
