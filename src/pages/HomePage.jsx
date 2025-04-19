@@ -5,12 +5,12 @@ export default function HomePage() {
   return (
     <Container maxWidth="md" sx={{ py: 6 }}>
       <Typography variant="h3" align="center" gutterBottom>
-        This is the coil. 
-        See a different vision of living.
+        This is the coil
       </Typography>
 
       <Typography variant="h6" align="center" color="text.secondary" gutterBottom>
-        A place to realize what matters to you, and make the choice to pursue it.
+        See a different vision of living.
+        This is a place to realize what matters to you, and make the choice to pursue it.
       </Typography>
 
       <Paper elevation={3} sx={{ p: 4, borderRadius: 3, mt: 6 }}>
