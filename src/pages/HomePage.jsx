@@ -5,21 +5,21 @@ export default function HomePage() {
   return (
     <Container maxWidth="md" sx={{ py: 6 }}>
       <Typography variant="h3" align="center" gutterBottom>
-        Welcome to Your Spiritual Journey
+        This is the coil. See a different vision of living.
       </Typography>
 
       <Typography variant="h6" align="center" color="text.secondary" gutterBottom>
-        A place to reconnect with what matters, through real talk, prayer, and purpose.
+        A place to realize what matters to you, and choose to pursue it.
       </Typography>
 
       <Paper elevation={3} sx={{ p: 4, borderRadius: 3, mt: 6 }}>
         <Stack spacing={3}>
-          <Typography variant="h5">Request Guidance or Prayer</Typography>
+          <Typography variant="h5">Seek Guidance or Prayer</Typography>
           <Typography variant="body2" color="text.secondary">
-            All are welcome. No judgment. No strings. We just need a little information to begin.
+            All people are welcome. No judgment. No strings. We just need to know you're alive.
           </Typography>
-          <TextField label="Your Name (optional)" variant="outlined" fullWidth />
-          <TextField label="Your Email (optional)" variant="outlined" fullWidth />
+          <TextField label="What you wish to be called" variant="outlined" fullWidth />
+          <TextField label="How you wish to be contacted (for verification)" variant="outlined" fullWidth />
           <TextField
             label="What's on your heart or mind?"
             variant="outlined"
@@ -28,7 +28,7 @@ export default function HomePage() {
             rows={5}
           />
           <Button variant="contained" size="large">
-            Send
+            Begin
           </Button>
         </Stack>
       </Paper>
@@ -37,10 +37,10 @@ export default function HomePage() {
         <Stack spacing={3}>
           <Typography variant="h5">Support the Mission</Typography>
           <Typography variant="body2" color="text.secondary">
-            Your support helps us keep guidance and prayer free for all who seek it.
+            Your support makes guidance and prayer possible for all who seek it.
           </Typography>
           <Button variant="outlined" size="large">
-            Make a Donation
+            Help us help others
           </Button>
         </Stack>
       </Paper>
