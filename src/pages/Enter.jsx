@@ -1,40 +1,44 @@
 import React, { useState } from "react";
-import { TextField, Button, Stack, Typography } from "@mui/material";
+import { TextField, Button, Stack, Typography, Alert } from "@mui/material";
 import axios from "axios";
 
-export default function EntryGate() {
+export default function EnterPage() {
   const [email, setEmail] = useState("");
-  const [nickname, setNickname] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      await await axios.post("/api/create-user", { email, nickname });
-
-      // Redirect or show next step
-      window.location.href = "/walk"; // or whatever route continues the journey
-    } catch (error) {
-      console.error("Signup failed:", error);
+      await axios.post("/api/request-token", { email });
+      setSubmitted(true);
+    } catch (err) {
+      setError("Failed to send login link. Please try again.");
+      console.error(err);
     }
   };
 
   return (
-    <Stack spacing={2} maxWidth="400px" mx="auto" mt={10}>
+    <Stack spacing={3} maxWidth="400px" mx="auto" mt={10}>
       <Typography variant="h4" align="center">Enter the Coil</Typography>
-      <TextField
-        label="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <TextField
-        label="Nickname"
-        value={nickname}
-        onChange={(e) => setNickname(e.target.value)}
-      />
-      <Button variant="contained" onClick={handleSubmit}>
-        Begin
-      </Button>
+      {submitted ? (
+        <Alert severity="success">
+          A login link has been sent to your email.
+        </Alert>
+      ) : (
+        <>
+          <TextField
+            label="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            type="email"
+            required
+            fullWidth
+          />
+          <Button variant="contained" onClick={handleSubmit}>Send Link</Button>
+          {error && <Alert severity="error">{error}</Alert>}
+        </>
+      )}
     </Stack>
   );
 }

@@ -8,12 +8,13 @@ datasource db {
 }
 
 model User {
-  id           String   @id @default(uuid())
-  email        String   @unique
-  nickname     String
-  hasBaptized  Boolean  @default(false)
-  choseLove    Boolean?
-  scrollIndex  Int      @default(0)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id            String   @id @default(cuid())
+  email         String   @unique
+  nickname      String?
+  coil          String? // optional: could assign user to a coil
+  scrollIndex   Int?
+  token         String?   @unique
+  tokenExpires  DateTime?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }
