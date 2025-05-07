@@ -86,7 +86,7 @@ export default function WalkPage({ userEmail = "atambo1@gmail.com" }) {
     }}
     onClick={() => navigate("/walk/questions")}
   >
-    Continue the Walk
+    Walk on
   </button>
 </section>
     </div>
