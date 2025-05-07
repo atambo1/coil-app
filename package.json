@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "postinstall": "echo skipped for minimal test",
+    "postinstall": "prisma generate",
     "lint": "eslint .",
     "preview": "vite preview"
   },
