@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { randomUUID } from "crypto";
-import nodemailer from "nodemailer";
+import { Resend } from "resend";
 
 const prisma = new PrismaClient();
 const BASE_URL = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000";
