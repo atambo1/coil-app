@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route, useParams } from "react-router-dom";
-import HomePage from "../pages/HomePage.jsx";
+import HomePage from "../pages/oldHomePage.jsx";
 import WalkPage from "../pages/Walk.jsx";
 import WalkQuestions from "../pages/WalkQuestions.jsx";
 import InvalidCoilPage from "../pages/InvalidCoilPage.jsx";

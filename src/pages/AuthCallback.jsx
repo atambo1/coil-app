@@ -18,8 +18,14 @@ export default function AuthCallback() {
     axios
       .post("/api/verify-token", { token })
       .then((res) => {
-        localStorage.setItem("coilUser", JSON.stringify(res.data.user));
-        navigate(`/${res.data.user.coil}/walk`);
+        const user = res.data.user;
+        localStorage.setItem("coilUser", JSON.stringify(user));
+
+        if (user.coil) {
+          navigate(`/${user.coil}`);
+        } else {
+          navigate("/welcome");
+        }
       })
       .catch((err) => {
         console.error(err);
