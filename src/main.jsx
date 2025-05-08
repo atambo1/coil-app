@@ -6,18 +6,21 @@ import HomePage from "./pages/HomePage.jsx";
 import EnterPage from "./pages/Enter.jsx";
 import AuthCallback from "./pages/AuthCallback.jsx";
 import WelcomePage from "./pages/WelcomePage.jsx";
+import { SessionProvider } from "./context/SessionContext"; //  NEW
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <Router>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/walk" element={<HomePage />} />
-        <Route path="/enter" element={<EnterPage />} />
-        <Route path="/auth" element={<AuthCallback />} />
-        <Route path="/:coilId/*" element={<CoilRouter />} />
-        <Route path="/welcome" element={<WelcomePage />} />
-      </Routes>
-    </Router>
+    <SessionProvider> {/*  Provides access to session */}
+      <Router>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/walk" element={<HomePage />} />
+          <Route path="/enter" element={<EnterPage />} />
+          <Route path="/auth" element={<AuthCallback />} />
+          <Route path="/:coilId/*" element={<CoilRouter />} />
+          <Route path="/welcome" element={<WelcomePage />} />
+        </Routes>
+      </Router>
+    </SessionProvider>
   </React.StrictMode>
 );

@@ -9,28 +9,31 @@ export default function AuthCallback() {
   const [status, setStatus] = useState("verifying");
 
   useEffect(() => {
-    const token = params.get("token");
-    if (!token) {
-      setStatus("error");
-      return;
-    }
+    const verifyToken = async () => {
+      const token = params.get("token");
+      if (!token) {
+        setStatus("error");
+        return;
+      }
 
-    axios
-      .post("/api/verify-token", { token })
-      .then((res) => {
+      try {
+        const res = await axios.post("/api/verify-token", { token });
         const user = res.data.user;
-        localStorage.setItem("coilUser", JSON.stringify(user));
+
+        await axios.post("/api/set-session", { user });
 
         if (user.coil) {
           navigate(`/${user.coil}`);
         } else {
           navigate("/welcome");
         }
-      })
-      .catch((err) => {
+      } catch (err) {
         console.error(err);
         setStatus("error");
-      });
+      }
+    };
+
+    verifyToken();
   }, [params, navigate]);
 
   return (
