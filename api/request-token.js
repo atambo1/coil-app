@@ -4,7 +4,7 @@ import { Resend } from "resend";
 
 const prisma = new PrismaClient();
 const resend = new Resend(process.env.RESEND_API_KEY); // ✅ FIXED: instantiate the resend client
-const BASE_URL = process.env.BASE_URL || `https://${process.env.VERCEL_URL}`;
+const BASE_URL = "https://thecoil.org";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).end();
