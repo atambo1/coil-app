@@ -11,6 +11,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@prisma/client": "^6.5.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@mui/material": "^6.4.8",
@@ -24,6 +25,7 @@
     "resend": "^4.5.1"
   },
   "devDependencies": {
+    "prisma": "^6.5.0",
     "@eslint/js": "^9.21.0",
     "@prisma/client": "^6.5.0",
     "@types/react": "^19.0.10",
