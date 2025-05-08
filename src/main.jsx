@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import CoilRouter from "./coils/CoilRouter";
-import HomePage from "./pages/oldHomePage.jsx";
+import HomePage from "./pages/HomePage.jsx";
 import EnterPage from "./pages/Enter.jsx";
 import AuthCallback from "./pages/AuthCallback.jsx";
 import WelcomePage from "./pages/WelcomePage.jsx";
