@@ -3,7 +3,7 @@ import { randomUUID } from "crypto";
 import { Resend } from "resend";
 
 const prisma = new PrismaClient();
-const BASE_URL = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000";
+const BASE_URL = process.env.BASE_URL || `https://${process.env.VERCEL_URL}`;
 
 export default async function handler(req, res) {
     if (req.method !== "POST") return res.status(405).end();
