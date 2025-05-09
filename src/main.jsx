@@ -6,7 +6,7 @@ import HomePage from "./pages/HomePage.jsx";
 import EnterPage from "./pages/Enter.jsx";
 import AuthCallback from "./pages/AuthCallback.jsx";
 import WelcomePage from "./pages/WelcomePage.jsx";
-import { SessionProvider } from "./context/SessionContext";
+import { SessionProvider, useSession } from "./context/SessionContext";
 
 
 const SessionRedirect = () => {
