@@ -16,7 +16,6 @@
     "@mui/material": "^6.4.8",
     "@prisma/client": "^6.5.0",
     "axios": "^1.8.4",
-    "iron-session": "^8.0.4",
     "nodemailer": "^7.0.2",
     "postcss": "^8.5.3",
     "react": "^19.0.0",
