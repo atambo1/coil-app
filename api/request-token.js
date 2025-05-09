@@ -1,46 +1,63 @@
-import { PrismaClient } from "@prisma/client";
-import { randomUUID } from "crypto";
+import { getIronSession } from "iron-session";
+import { sessionOptions } from "../lib/sessionOptions.js";
+import { prisma } from "../lib/prisma.js";
+import { v4 as uuid } from "uuid";
 import { Resend } from "resend";
 
-const prisma = new PrismaClient();
-const resend = new Resend(process.env.RESEND_API_KEY); // ✅ FIXED: instantiate the resend client
-const BASE_URL = "https://thecoil.org";
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).end();
 
-  const { email } = req.body;
-
   try {
-    const token = randomUUID();
+    const { email } = req.body;
 
-    await prisma.user.upsert({
+    if (!email || typeof email !== "string") {
+      return res.status(400).json({ error: "Email is required" });
+    }
+
+    const user = await prisma.user.findUnique({ where: { email } });
+
+    if (!user) {
+      return res.status(401).json({ error: "User not found" });
+    }
+
+    const token = uuid();
+
+    await prisma.user.update({
       where: { email },
-      update: {
-        token,
-        tokenExpires: new Date(Date.now() + 15 * 60 * 1000), // 15 minutes
-      },
-      create: {
-        email,
-        token,
-        tokenExpires: new Date(Date.now() + 15 * 60 * 1000),
+      data: {
+        token: {
+          upsert: {
+            create: {
+              token,
+              createdAt: new Date(),
+            },
+            update: {
+              token,
+              createdAt: new Date(),
+            },
+          },
+        },
       },
     });
 
-    const url = `${BASE_URL}/auth?token=${token}`;
-    console.log(`Generated token URL: ${url}`);
+    const loginUrl = `https://www.thecoil.org/auth?token=${token}`;
 
-    const result = await resend.emails.send({
-      from: process.env.FROM_EMAIL,
+    await resend.emails.send({
+      from: "login@thecoil.org",
       to: email,
-      subject: "Your link to Enter the Coil",
-      html: `<p>Click to enter the Coil: <a href="${url}">${url}</a></p>`,
+      subject: "Your magic link to The Coil",
+      html: `
+        <p>Welcome back.</p>
+        <p><a href="${loginUrl}" style="background:#000;color:#fff;padding:12px 20px;border-radius:4px;text-decoration:none;">Click here to log in</a></p>
+        <p>This link will expire when used or in 48 hours.</p>
+      `,
     });
 
-    console.log("Resend response:", result);
-    res.status(200).json({ sent: true });
+    return res.status(200).json({ message: "Login link sent" });
   } catch (err) {
-    console.error("Request token error:", err);
-    res.status(500).json({ error: "Failed to send email." });
+    console.error("🔥 request-token error:", err);
+    return res.status(500).json({ error: "Server error" });
   }
 }
