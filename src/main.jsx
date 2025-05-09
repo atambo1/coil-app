@@ -6,26 +6,7 @@ import HomePage from "./pages/HomePage.jsx";
 import EnterPage from "./pages/Enter.jsx";
 import AuthCallback from "./pages/AuthCallback.jsx";
 import WelcomePage from "./pages/WelcomePage.jsx";
-import { SessionProvider, useSession } from "./context/SessionContext";
-
-
-const SessionRedirect = () => {
-  const { user, loading } = useSession();
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  useEffect(() => {
-    if (!loading && user && location.pathname === "/") {
-      if (user.coil) {
-        navigate(`/${user.coil}`);
-      } else {
-        navigate("/welcome");
-      }
-    }
-  }, [user, loading, location.pathname, navigate]);
-
-  return null;
-};
+import SessionRedirect from "./components/SessionRedirect";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
