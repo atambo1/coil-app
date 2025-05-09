@@ -5,20 +5,27 @@ export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).end();
   const { token } = req.body;
 
-  const user = await prisma.user.findFirst({
-    where: {
-      token,
-      tokenExpires: { gte: new Date() },
-    },
+  const tokenRecord = await prisma.token.findUnique({
+    where: { token },
+    include: { user: true },
   });
 
-  if (!user) return res.status(401).json({ error: "Invalid or expired token." });
+  // Check token is valid and not expired (older than 48h)
+  const tokenAgeMs = tokenRecord
+    ? new Date() - new Date(tokenRecord.createdAt)
+    : Infinity;
 
-  // Optionally clear token here
-  await prisma.user.update({
-    where: { email: user.email },
-    data: { token: null, tokenExpires: null },
+  const isExpired = tokenAgeMs > 1000 * 60 * 60 * 48;
+
+  if (!tokenRecord || !tokenRecord.user || isExpired) {
+    return res.status(401).json({ error: "Invalid or expired token." });
+  }
+
+  // Delete token after use (single-use login token)
+  await prisma.token.delete({
+    where: { token },
   });
 
-  res.status(200).json({ user });
+  // Return verified user
+  res.status(200).json({ user: tokenRecord.user });
 }

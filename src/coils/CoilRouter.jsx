@@ -1,17 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Routes, Route, useParams } from "react-router-dom";
 import HomePage from "../pages/oldHomePage.jsx";
 import WalkPage from "../pages/Walk.jsx";
 import WalkQuestions from "../pages/WalkQuestions.jsx";
 import InvalidCoilPage from "../pages/InvalidCoilPage.jsx";
-import { isValidCoil } from "./coilConfig";
+import axios from "axios";
 
 export default function CoilRouter() {
   const { coilId } = useParams();
+  const [isValid, setIsValid] = useState(null);
 
-  if (!isValidCoil(coilId)) {
-    return <InvalidCoilPage coilId={coilId} />;
-  }
+  useEffect(() => {
+    axios.get(`/api/coil/${coilId}/exists`)
+      .then((res) => setIsValid(res.data.exists))
+      .catch(() => setIsValid(false));
+  }, [coilId]);
+
+  if (isValid === null) return <div>Loading...</div>;
+  if (!isValid) return <InvalidCoilPage coilId={coilId} />;
 
   return (
     <Routes>

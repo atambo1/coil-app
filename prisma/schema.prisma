@@ -8,13 +8,53 @@ datasource db {
 }
 
 model User {
-  id            String   @id @default(cuid())
-  email         String   @unique
-  nickname      String?
-  coil          String? // optional: could assign user to a coil
-  scrollIndex   Int?
-  token         String?   @unique
-  tokenExpires  DateTime?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id           String        @id @default(uuid())
+  email        String        @unique
+  name         String?
+  coilId     String?
+  coil       Coil?     @relation(fields: [coilId], references: [id])
+
+  // INVITATION FLOW
+  invitedById  String?
+  invitedBy    User?         @relation("UserInviter", fields: [invitedById], references: [id])
+  invitedUsers User[]        @relation("UserInviter")
+
+  invitations  Invitation[]  @relation("UserInvitations")
+  token        Token?        // ✅ relation inferred by Token.user
+}
+
+model Token {
+  id        String   @id @default(uuid())
+  token     String   @unique
+  userId    String   @unique
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model Invitation {
+  id           String   @id @default(uuid())
+  token        String   @unique
+  email        String
+  name         String
+  coilId     String
+  coil       Coil     @relation(fields: [coilId], references: [id])
+
+  invitedById  String
+  invitedBy    User     @relation("UserInvitations", fields: [invitedById], references: [id])
+
+  acceptedAt   DateTime?
+  createdAt    DateTime @default(now())
+}
+
+model Coil {
+  id          String        @id @default(uuid())
+  slug        String        @unique
+  name        String
+  description String?
+  inviteOnly  Boolean       @default(false)
+  createdAt   DateTime      @default(now())
+
+  users       User[]
+  invitations Invitation[]
 }
