@@ -1,5 +1,11 @@
 {
     "version": 2,
+    "functions": {
+      "api/*.js": {
+        "includeFiles": "api/node_modules/**",
+        "runtime": "nodejs20.x"
+      }
+    },
     "routes": [
       { "src": "/api/(.*)", "dest": "/api/$1.js" },
       { "handle": "filesystem" },
